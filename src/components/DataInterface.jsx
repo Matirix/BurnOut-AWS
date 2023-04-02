@@ -1,21 +1,21 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { 
+import {
     getFirestore,
     query,
     where,
     orderBy,
     onSnapshot,
     collection,
-    getDoc, 
-    getDocs, 
+    getDoc,
+    getDocs,
     addDoc,
     updateDoc,
-    doc, 
+    doc,
     deleteDoc,
     setDoc,
-    serverTimestamp, 
+    serverTimestamp,
     arrayUnion,
     increment,
 } from "firebase/firestore";
@@ -38,13 +38,13 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAYBu8QwRc-aYeUEO-ujSpkjeNaYND59eA",
-  authDomain: "burnout-46863.firebaseapp.com",
-  projectId: "burnout-46863",
-  storageBucket: "burnout-46863.appspot.com",
-  messagingSenderId: "931271712262",
-  appId: "1:931271712262:web:a74316531ab7c9f01bed87",
-  measurementId: "G-ZH4V70KW9K"
+    apiKey: "AIzaSyAYBu8QwRc-aYeUEO-ujSpkjeNaYND59eA",
+    authDomain: "burnout-46863.firebaseapp.com",
+    projectId: "burnout-46863",
+    storageBucket: "burnout-46863.appspot.com",
+    messagingSenderId: "931271712262",
+    appId: "1:931271712262:web:a74316531ab7c9f01bed87",
+    measurementId: "G-ZH4V70KW9K"
 };
 
 // Initialize Firebase
@@ -133,6 +133,7 @@ export const JobPositions = {
     WebDeveloper: 'Web Developer',
 }
 
+
 // data functions
 export const createApplication = (applicationData) => {
     const applicationsColRef = collection(db, "applications");
@@ -151,6 +152,23 @@ export const createApplication = (applicationData) => {
         console.error("Error adding document: ", error);
     });
 }
+
+export const createUser = async (userData) => {
+    const userColRef = collection(db, "users");
+    return addDoc(userColRef, {
+        userName: userData.userName,
+        email: userData.email,
+        rejectedAppCount: userData.rejectedAppCount,
+        submittedAppCount: userData.submittedAppCount,
+        communityID: userData.communityID,
+    }).then(() => {
+        console.log("new user document successfully created!");
+    }).catch((error) => {
+        console.error("Error adding document: ", error);
+    });
+}
+
+
 
 export const updateApplication = (applicationData) => {
     const applicationRef = doc(db, "applications", applicationData.id);
@@ -179,12 +197,12 @@ export const getApplications = async (userID) => {
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      applicationsRet.push(doc.data());
-    //   console.log(doc.id, " => ", doc.data());
+        applicationsRet.push(doc.data());
+        //   console.log(doc.id, " => ", doc.data());
     });
 
     return applicationsRet;
-  };
+};
 
 
 export const getCommunityApplications = (communityID = "0Km4CwF0nULxl1qtpyuB") => {
