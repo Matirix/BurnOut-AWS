@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../login-signup.css'
 import { useNavigate } from "react-router-dom";
 import UserPool from './UserPool';
+import * as DataInterface from './DataInterface'
 
 function SignUpView(props){
     const [email, setEmail] = useState('');
@@ -10,12 +11,28 @@ function SignUpView(props){
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+
+        const userData = {
+          communityID: '0Km4CwF0nULxl1qtpyuB',
+          email: email,
+          rejectedAppCount: 0,
+          submittedAppCount: 0,
+          userName: name
+      }
+      await DataInterface.createUser(userData).then((data) => {
+        console.log(data)});
+
+
         UserPool.signUp(name, password, [{Name: 'email', Value: email}], null , (err, data) => {
             if (err) console.error(err);
             console.log(data);
         })
+        
+        navigate("/home")
+
       }
 
     return(
