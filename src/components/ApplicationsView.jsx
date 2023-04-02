@@ -8,26 +8,19 @@ function ApplicationsView() {
   const [appCounter, setAppCounter] = useState(0)
   const [rejCounter, setRejCounter] = useState(0)
 
-  const userID = DataInterface.getUserID();
-
-
-
-
+    const userID = DataInterface.getUserID();
+    // Changed this to new user
+    const newUserID = Pool.getCurrentUser().getUsername();
 
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await DataInterface.getApplications(userID);
+      const data = await DataInterface.getApplications(newUserID);
       setApplicationData(data);
-      console.log(Pool.getCurrentUser().username)
+      console.log(Pool.getCurrentUser().getUsername() )
     };
     fetchData();
   }, [userID]);
-
-
-
-
-
 
 
   const personPost = [

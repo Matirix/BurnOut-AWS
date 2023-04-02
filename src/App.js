@@ -56,6 +56,7 @@ function App() {
             <Route path="/community" element={<CommunityView />}></Route>
             <Route path='/leaderboard' element={<LeaderboardView />}></Route>
             <Route path='/profile' element={<ProfileView />}></Route>
+            <Route path='/applicationForm' element={<ApplicationForm />}></Route>
           </Routes>
       </Account>
       </div>

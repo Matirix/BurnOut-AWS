@@ -3,12 +3,15 @@ import * as DataInterface from './DataInterface'
 import {useState, useEffect} from 'react';
 import { JobPositions } from './DataInterface';
 import { useNavigate } from "react-router-dom";
+import Pool from "./UserPool";
+
 // import { userNavigate } from "react-router-dom";
 // import { useHistory } from 'react-router-dom';
 
 
 function ApplicationForm() {
     const navigate = useNavigate();
+    const userID = Pool.getCurrentUser().getUsername();
 
   //Date Variable
   const [day, setDay] = useState(new Date().getDate());
@@ -61,6 +64,7 @@ function ApplicationForm() {
     { value: 'interviewed', label: 'Interviewed' },
     { value: 'offered', label: 'Offered' },
     { value: 'accepted', label: 'Accepted' },
+    { value: 'rejected', label: 'Rejected' },
   ];
 
   // const history = useHistory();
@@ -80,16 +84,17 @@ function ApplicationForm() {
       jobPosition: position,
       comments: comments,
       communityID: communityID,
-      userID: DataInterface.getUserID(),
-      username: await DataInterface.getUser().userName,
+      userID: userID,
+      username: userID
     }
     console.log(DataInterface.getUser())
+
     
     await DataInterface.createApplication(applicationData).then((response) => {
       console.log(response);
     });
     await DataInterface.incrementSubmittedAppCount();
-    navigate('/');
+    navigate('/home');
   }
 
   return (

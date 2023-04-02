@@ -9,7 +9,6 @@ const AccountContext = createContext()
 
 export const Account = (props) => {
     const navigate = useNavigate();
-
     const getSession = async () => {
         return await new Promise((resolve, reject) => {
             const user = Pool.getCurrentUser()
