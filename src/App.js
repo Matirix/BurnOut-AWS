@@ -43,7 +43,7 @@ function App() {
 
 
   return (
-    <div className="App h-screen bg-beige">
+    <div className="App h-full bg-beige">
       <Account>
           {/* <Header text={text}/> */}
           <Status text={text}/>

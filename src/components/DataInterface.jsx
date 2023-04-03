@@ -34,6 +34,7 @@ import {
 
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { data } from "autoprefixer";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -214,22 +215,24 @@ export const getApplications = async (userID) => {
     return applicationsRet;
 };
 
-
-export const getCommunityApplications = (communityID = "0Km4CwF0nULxl1qtpyuB") => {
+export const getCommunityApplications = async (communityID = "0Km4CwF0nULxl1qtpyuB") => {
     const applicationsColRef = collection(db, "applications");
     const communityApplicationsQuery = query(applicationsColRef, where("communityID", "==", communityID), orderBy("dateApplied", "desc"));
-
-    const querySnapshot = getDocs(communityApplicationsQuery);
+  
+    // use await to wait for the query snapshot to be retrieved
+    const querySnapshot = await getDocs(communityApplicationsQuery);
     const applications = [];
+  
     querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        applications.push({
-            id: doc.id,
-            ...doc.data()
-        });
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc)
+      applications.push({
+        id: doc.id,
+        ...doc.data()
+      });
     });
     return applications;
-}
+  }
 //     return onSnapshot(communityApplicationsQuery, (querySnapshot) => {
 //         const applications = [];
 //         querySnapshot.forEach((doc) => {
