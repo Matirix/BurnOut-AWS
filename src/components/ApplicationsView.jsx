@@ -54,9 +54,9 @@ function ApplicationsView() {
 
           <div className="counter mb-1 flex font-saira text-xl gap-3 justify-center border-b-1 border-black">
           {/* <img src={application} alt="" /> */}
-          <p className='my-auto font-saira'>Applications: 76</p>
+          <p className='my-auto font-saira'>Applications: 4</p>
           {/* <img src={rejection} alt="" /> */}
-          <p className='my-auto font-saira'>Rejections: 4</p>
+          <p className='my-auto font-saira'>Rejections: 0</p>
         </div>
       <br></br>
 

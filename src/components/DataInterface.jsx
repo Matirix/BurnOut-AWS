@@ -215,6 +215,7 @@ export const getApplications = async (userID) => {
     return applicationsRet;
 };
 
+
 export const getCommunityApplications = async (communityID = "0Km4CwF0nULxl1qtpyuB") => {
     const applicationsColRef = collection(db, "applications");
     const communityApplicationsQuery = query(applicationsColRef, where("communityID", "==", communityID), orderBy("dateApplied", "desc"));
@@ -233,6 +234,26 @@ export const getCommunityApplications = async (communityID = "0Km4CwF0nULxl1qtpy
     });
     return applications;
   }
+
+  export const getCommunityMembersRanking = async (communityID = "0Km4CwF0nULxl1qtpyuB") => {
+    const applicationsColRef = collection(db, "users");
+    const communityMembersRanking = query(applicationsColRef, where("communityID", "==", communityID), orderBy("submittedAppCount", "desc"));
+  
+    // use await to wait for the query snapshot to be retrieved
+    const querySnapshot = await getDocs(communityMembersRanking);
+    const applications = [];
+  
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc)
+      applications.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    return applications;
+  }
+
 //     return onSnapshot(communityApplicationsQuery, (querySnapshot) => {
 //         const applications = [];
 //         querySnapshot.forEach((doc) => {

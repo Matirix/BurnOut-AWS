@@ -1,10 +1,28 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-function LeaderboardView() {
-  const [sortedLeaderBoards, setSortedLeaderBoards] = useState([])
+import * as DataInterface from './DataInterface'
+import Pool from './UserPool'
 
+function LeaderboardView() {
   const application = "../images/article.svg"
   const rejection = "../images/rejected.svg"
+
+  const [communityLeaderBoard, setcommunityLeaderBoard] = useState([]);
+
+
+  const userID = DataInterface.getUserID();
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const data = await DataInterface.getCommunityMembersRanking();
+      console.log(data)
+      setcommunityLeaderBoard(data);
+      // console.log(Pool.getCurrentUser().getUsername() )
+    };
+    fetchData();
+    // console.log(communityData)
+  }, [userID]);
 
 
   const Leadboards = [
@@ -50,15 +68,15 @@ function LeaderboardView() {
     },
   ]
 
-  function sortingList() {
-    setSortedLeaderBoards(Leadboards.sort((person_a, person_b) => (person_a.applications * (person_a.rejections / 10)
-      < (person_b.applications * (person_b.rejections / 10)) ? 1 : -1)))
-    console.log(Leadboards)
-  }
+  // function sortingList() {
+  //   setSortedLeaderBoards(Leadboards.sort((person_a, person_b) => (person_a.applications * (person_a.rejections / 10)
+  //     < (person_b.applications * (person_b.rejections / 10)) ? 1 : -1)))
+  //   console.log(Leadboards)
+  // }
 
-  useEffect(() => {
-    sortingList()
-  }, [])
+  // useEffect(() => {
+  //   sortingList()
+  // }, [])
 
   return (
     <div className='h-screen bg-beige md:flex text-black'>
@@ -89,43 +107,43 @@ function LeaderboardView() {
             </p>
           </div>
                       {/* Ranking */}
-                      <p className='text-md font-saira text-navy text-xl'>Rank: 3</p>
+                      <p className='text-md font-saira text-navy text-xl'>Rank: 2</p>
         </div>
       </div>
       {/* Rankings Column */}
       <div className='flex flex-col md:w-2/3'>
 
       {/* Rankings */}
-      <p className="text-4xl m-3 font-bold font-saira text-dark-navy text-center mt-10">RANKINGS:</p>
+      <p className="text-4xl m-3 font-bold font-saira text-dark-navy text-center mt-10">Community Leaderboard:</p>
 
       {/* People Ranking List */}
 
       <div className="flex flex-col gap-2 overflow-y-scroll">
         {/* Each card */}
-        {sortedLeaderBoards.map(({ id, link, pic, name, rejections, applications, datetime, comment }, index) => {
+        {communityLeaderBoard.map(({ id, link, pic, userName, rejectedAppCount, submittedAppCount, datetime, comment }, index) => {
           return (
             <div className=" p-2 rounded-lg flex justify-between border-solid border-black border-1 bg-slate-200 mx-2" key={id}>
 
 
               <div className='flex gap-2 w-1/5'>
                 <p className='text-navy m-auto font-saira text-4xl'>{index + 1}</p>
-                <img src={pic} alt="" className='grow' />
+                <img src={"../images/person.svg"} alt="" className='grow' />
               </div>
 
 
               {/* Information */}
               <div className="flex flex-col grow">
-                <p className="font-saira text-center">{name}</p>
+                <p className="font-saira text-center">{userName}</p>
                 <div className='information grow justify-evenly flex w-4/5 m-auto'>
                   <div className="flex">
                     <object className="mx-auto my-auto" type="image/svg+xml" data={application}></object>
 
-                    <p className='m-auto font-saira'>Applications: {applications}</p>
+                    <p className='m-auto font-saira'>Applications: {submittedAppCount}</p>
 
                   </div>
                   <div className='flex'>
                     <object className="mx-auto my-auto" type="image/svg+xml" data={rejection}></object>
-                    <p className='m-auto font-saira'>Rejections: {rejections}</p>
+                    <p className='m-auto font-saira'>Rejections: {rejectedAppCount}</p>
 
 
                   </div>
