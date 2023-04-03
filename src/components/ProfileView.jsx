@@ -36,11 +36,14 @@ function ProfileView() {
     console.log(data)
     setUsername(data.userName)
     setEmail(data.email)
-    setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user1234" );
+    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user123456" );
     // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/" + Pool.getCurrentUser().username);
     setCommunityID(data.communityID)
     DataInterface.getUserImage().then((url) => {
+      console.log(url);
       setPhotoUrl(url);
+    }).catch((error) => {
+      console.error('Error uploading file:', error);
     });
   }
 
@@ -58,8 +61,8 @@ const handleUpload = () => {
 };
   
   useEffect(() => {
-    // getUserInfo()
-    setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user1234");
+    getUserInfo()
+    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user1234");
 
   }, []);
 

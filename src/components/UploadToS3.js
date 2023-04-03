@@ -47,14 +47,15 @@ import React , {useState} from 'react';
 import { uploadFile } from 'react-s3';
 import aws from 'aws-sdk';
 import Pool from './UserPool'
+// import dotenv from 'dotenv';
 
-
+// dotenv.config();
 
 const S3_BUCKET ='burnout-test';
 const REGION ='us-west-2';
-const ACCESS_KEY ='AKIAU7XKFOJGQUDQ4I74';
-const SECRET_ACCESS_KEY ='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';
-const DIR_NAME = "user1234"//Pool.getCurrentUser().username;
+const ACCESS_KEY = process.env.REACT_APP_AWS_ACCESS_KEY_ID; //"AKIAU7XKFOJGYGJEFUFI" //process.env.REACT_APP_AWS_ACCESS_KEY_ID;
+const SECRET_ACCESS_KEY = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY; //"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" //process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
+const DIR_NAME = Pool.getCurrentUser().username; //"user1234"//
 
 const config = {
     bucketName: S3_BUCKET,

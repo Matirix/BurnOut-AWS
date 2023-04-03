@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import Pool from "./UserPool";
+
 import {
     getFirestore,
     query,
@@ -72,7 +74,7 @@ export const authenticateWithEmail = (email, password) => {
 }
 
 export const isLoggedIn = () => {
-    const user = getAuth().currentUser;
+    const user = Pool.getCurrentUser();
     if (user) {
         console.log("User is logged in");
         return true;
@@ -83,12 +85,17 @@ export const isLoggedIn = () => {
 }
 
 export const getUserID = () => {
-    const user = getAuth().currentUser;
-    if (user) {
-        return user.uid;
+    if (Pool.getCurrentUser()) {
+        return Pool.getCurrentUser().username;
     } else {
         return null;
     }
+    // const user = getAuth().currentUser;
+    // if (user) {
+    //     return user.uid;
+    // } else {
+    //     return null;
+    // }
 }
 
 export const logout = () => {
@@ -154,8 +161,11 @@ export const createApplication = (applicationData) => {
 }
 
 export const createUser = async (userData) => {
-    const userColRef = collection(db, "users");
-    return addDoc(userColRef, {
+    // const userColRef = collection(db, "users");
+    console.log("creating user");
+    console.log(userData.userName);
+    const userColRef = doc(db, "users", userData.userName);
+    return setDoc(userColRef, {
         userName: userData.userName,
         email: userData.email,
         rejectedAppCount: userData.rejectedAppCount,
@@ -333,16 +343,21 @@ export const uploadUserImage = (image) => {
     });
 }
 
-export const getUserImage = (userID) => {
-    if (!userID) {
-        userID = getUserID();
+export const getUserImage = async () => {
+    // userID =     const user = Pool.getCurrentUser()
+    const userID = getUserID();
+    console.log(userID)
+    if (userID === null) {
+        return null;
     }
-    const storageRef = ref(storage, `users/${userID}/profileImage`);
-    return getDownloadURL(storageRef).then((url) => {
-        return url;
-    }).catch((error) => {
-        console.log(error);
-    });
+    // userID = user.username;
+    // const storageRef = ref(storage, `users/${userID}/profileImage`);
+    // return getDownloadURL(storageRef).then((url) => {
+    //     return url;
+    // }).catch((error) => {
+    //     console.log(error);
+    // });
+    return "https://burnout-test.s3.us-west-2.amazonaws.com/" + userID 
 }
 
 // community functions
