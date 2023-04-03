@@ -44,7 +44,6 @@
 
 
 import React , {useState} from 'react';
-import { uploadFile } from 'react-s3';
 import aws from 'aws-sdk';
 import Pool from './UserPool'
 // import dotenv from 'dotenv';
