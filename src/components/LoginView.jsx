@@ -59,8 +59,8 @@ function LoginView(props) {
         <br></br>
         <h1>---------------------OR--------------------</h1>
         <form className="flex flex-col bg-dark-navy m-4 p-4" onSubmit={handleSubmit}>
-          <label htmlfor="email">Email </label>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} type="name" placeholder="Enter email" name="email"></input>
+          <label htmlfor="email">Username </label>
+          <input value={email} onChange={(e) => setEmail(e.target.value)} type="name" placeholder="Enter username" name="email"></input>
           <label htmlfor="password">Password </label>
           <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Enter password"name="password"></input>
           <br></br>
