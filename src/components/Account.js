@@ -62,9 +62,6 @@ export const Account = (props) => {
         if (user) {
             console.log("Logging out")
             user.signOut()
-
-
-            
         }
     }
 

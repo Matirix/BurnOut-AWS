@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as DataInterface from './DataInterface'
+import UploadToS3 from './UploadToS3';
+import Pool from './UserPool'
+
 
 
 function ProfileView() {
@@ -33,9 +36,14 @@ function ProfileView() {
     console.log(data)
     setUsername(data.userName)
     setEmail(data.email)
+    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user123456" );
+    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/" + Pool.getCurrentUser().username);
     setCommunityID(data.communityID)
     DataInterface.getUserImage().then((url) => {
+      console.log(url);
       setPhotoUrl(url);
+    }).catch((error) => {
+      console.error('Error uploading file:', error);
     });
   }
 
@@ -54,6 +62,8 @@ const handleUpload = () => {
   
   useEffect(() => {
     getUserInfo()
+    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user1234");
+
   }, []);
 
   return (
@@ -62,10 +72,8 @@ const handleUpload = () => {
       <section className='flex w-1/2 flex-col my-auto justify-start'>
         <h2 className="font-bold text-4xl font-saira  text-dark-navy text-center">Change Photo</h2>
         {photoUrl && <img className='m-3 mx-auto w-2/3' src={photoUrl} alt="Profile" /> }
-        <input className="ml-20" type="file" name="file" onChange={(e) => setPhotoUrl(e.target.value)} />
-
-
-        <button className="text-white text-ig bg-navy font-bold rounded-20 py-2 px-4 cursor-pointer" type="button" onClick={handleUpload}>Upload</button>
+        
+        <UploadToS3 />
         <br></br>
 
       </section>
