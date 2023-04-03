@@ -16,6 +16,7 @@ function ApplicationsView() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await DataInterface.getApplications(newUserID);
+      console.log(data)
       setApplicationData(data);
       console.log(Pool.getCurrentUser().getUsername() )
     };
@@ -73,7 +74,7 @@ function ApplicationsView() {
               {data.companyName}
             </p>
             <p className="flex flow-grow justify-between text-gray-600 mb-2 font-salsa">
-              Date Applied: <span></span> {new Date(data.dateApplied * 1000).toLocaleString()}
+              Date Applied: <span></span> {new Date(data.dateApplied.seconds * 1000).toLocaleString()}
             </p>
             <p className="flex text-gray-600 mb-2 font-salsa justify-between">
               Status: <span className="ml-10"></span>{data.applicationStatus}

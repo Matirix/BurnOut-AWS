@@ -305,10 +305,10 @@ export const incrementSubmittedAppCount = () => {
 }
 
 export const updateUser = (user) => {
-    const userRef = doc(db, "users", user.uid);
+    const userRef = doc(db, "users", getUserID());
     return updateDoc(userRef, {
         email: user.email,
-        userName: user.displayName,
+        userName: user.userName,
         communityID: user.communityID || "0Km4CwF0nULxl1qtpyuB",
     }).then(() => {
         console.log("Document successfully updated!");

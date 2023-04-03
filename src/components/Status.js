@@ -14,6 +14,13 @@ export const Status = () => {
 
     const navigate = useNavigate();
 
+    const handleLogout = () => {
+        logout().then(() => {
+          navigate("/");
+          window.location.reload();
+        }
+        );
+    }
 
     useEffect(() => {
         getSession()
@@ -25,7 +32,7 @@ export const Status = () => {
 
   return (
     <div className='flex justify-end'>
-        <div>{status ? <button className='bg-dark-navy p-4 rounded-b-lg text-white font-salsa' onClick={logout}>{user.username},  LOGOUT </button> : '' }</div>
+        <div>{status ? <button className='bg-dark-navy p-4 rounded-b-lg text-white font-salsa' onClick={handleLogout}>{user.username},  LOGOUT </button> : '' }</div>
 
     </div>
   )

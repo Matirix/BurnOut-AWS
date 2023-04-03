@@ -57,13 +57,46 @@ export const Account = (props) => {
         })
     }
 
-    const logout = () => {
-        const user = Pool.getCurrentUser()
-        if (user) {
-            console.log("Logging out")
-            user.signOut()
-        }
+    const logout = async () => {
+        return await new Promise((resolve, reject) => {
+            const user = Pool.getCurrentUser()
+            if (user) {
+                user.signOut()
+                resolve()
+            } else {
+                reject()
+            }
+        })
     }
+
+    // const logout = () => {
+    //     console.log("attempting log out")
+    //     const user = Pool.getCurrentUser()
+    //     console.log(user)
+    //     user.getSession(function(error, session) {
+    //         if(error) {
+    //          console.log(error);
+    //         //  browserHistory.push("/");
+    //          return;
+    //         }
+    //         if(session) {
+    //         //  _this.getUserAttributes(cognitoUser);
+    //         console.log(session)
+    //         user.signOut({function(error, result) {
+    //             if (error) {
+    //                 console.log(error);
+    //                 return;
+    //             }
+    //             console.log('user signed out');
+    //             navigate('/')
+    //         }})
+    //         }
+    //     });
+    //     // if (user) {
+    //     //     console.log("Logging out")
+    //     //     user.signOut()
+    //     // }
+    // }
 
 
     return (
