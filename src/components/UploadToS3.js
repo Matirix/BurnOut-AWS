@@ -53,8 +53,8 @@ import Pool from './UserPool'
 
 const S3_BUCKET ='burnout-test';
 const REGION ='us-west-2';
-const ACCESS_KEY = process.env.REACT_APP_AWS_ACCESS_KEY_ID; //"AKIAU7XKFOJGYGJEFUFI" //process.env.REACT_APP_AWS_ACCESS_KEY_ID;
-const SECRET_ACCESS_KEY = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY; //"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" //process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
+const ACCESS_KEY = process.env.REACT_APP_AWS_ACCESS_KEY_ID; 
+const SECRET_ACCESS_KEY = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
 const DIR_NAME = Pool.getCurrentUser().username; //"user1234"//
 
 const config = {
