@@ -46,6 +46,8 @@
 import React , {useState} from 'react';
 import aws from 'aws-sdk';
 import Pool from './UserPool'
+import {getUserID} from './DataInterface'
+
 // import dotenv from 'dotenv';
 
 // dotenv.config();
@@ -54,7 +56,7 @@ const S3_BUCKET ='burnout-test';
 const REGION ='us-west-2';
 const ACCESS_KEY = process.env.REACT_APP_AWS_ACCESS_KEY_ID; 
 const SECRET_ACCESS_KEY = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
-const DIR_NAME = Pool.getCurrentUser().username; //"user1234"//
+const DIR_NAME = getUserID()//Pool.getCurrentUser().username; //"user1234"//
 
 const config = {
     bucketName: S3_BUCKET,
