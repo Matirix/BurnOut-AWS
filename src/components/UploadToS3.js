@@ -126,10 +126,10 @@ const UploadImageToS3WithReactS3 = () => {
         return uploadURL
     }
 
-    return <div>
+    return <div className=''>
         {/* <div>React S3 File Upload</div> */}
-        <input className="ml-20" type="file" onChange={handleFileInput}/>
-        <button className="text-white text-ig bg-navy font-bold rounded-20 py-2 px-4 cursor-pointer" type="button" onClick={() => handleUpload(selectedFile)}> Upload to S3</button>
+        <input className="ml-32" type="file" onChange={handleFileInput}/>
+        <button className="text-white text-ig rounded-lg bg-navy font-bold rounded-20 py-2 px-4 cursor-pointer" type="button" onClick={() => handleUpload(selectedFile)}> Upload to S3</button>
     </div>
 }
 

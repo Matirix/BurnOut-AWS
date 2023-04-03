@@ -72,11 +72,13 @@ const handleUpload = () => {
   return (
     <div className="profile p-4 bg-slate-200 h-screen m-auto flex">
       {/*  column with image */}
-      <section className='flex w-1/2 flex-col my-auto justify-start'>
+      <section className='flex w-1/2 flex-col my-auto justify-center'>
         <h2 className="font-bold text-4xl font-saira  text-dark-navy text-center">Change Photo</h2>
         {photoUrl && <img className='m-3 mx-auto w-2/3' src={photoUrl} alt="Profile" /> }
-        
+        <div>
         <UploadToS3 />
+
+        </div>
         <br></br>
 
       </section>

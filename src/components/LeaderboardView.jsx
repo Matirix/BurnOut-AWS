@@ -1,11 +1,20 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import * as DataInterface from './DataInterface'
+import UploadToS3 from './UploadToS3';
 import Pool from './UserPool'
 
 function LeaderboardView() {
   const application = "../images/article.svg"
   const rejection = "../images/rejected.svg"
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [communityID, setCommunityID] = useState('');
+  const [photoUrl, setPhotoUrl] = useState(null);
+  const [rejectedAppCount, setRejectedAppCount] = useState(0);
+  const [submittedAppCount, setSubmittedAppCount] = useState(0);
+  const [currentranking, setcurrentranking] = useState(0);
 
   const [communityLeaderBoard, setcommunityLeaderBoard] = useState([]);
 
@@ -13,16 +22,45 @@ function LeaderboardView() {
   const userID = DataInterface.getUserID();
 
   useEffect(() => {
+    //Geting user Info
+    const getUserInfo = async () => {
+      const data = await DataInterface.getUser();
+      if (!data) {
+        return;
+      }
+      setUsername(data.userName)
+      setEmail(data.email)
+      setRejectedAppCount(data.rejectedAppCount)
+      setSubmittedAppCount(data.submittedAppCount)
+      setCommunityID(data.communityID)
+      DataInterface.getUserImage().then((url) => {
+        console.log(url);
+        setPhotoUrl(url);
+      }).catch((error) => {
+        console.error('Error uploading file:', error);
+      });
+    }
 
+    //Geting community Info
     const fetchData = async () => {
       const data = await DataInterface.getCommunityMembersRanking();
       console.log(data)
-      setcommunityLeaderBoard(data);
-      // console.log(Pool.getCurrentUser().getUsername() )
-    };
-    fetchData();
-    // console.log(communityData)
-  }, [userID]);
+        setcommunityLeaderBoard(data);
+        // console.log(Pool.getCurrentUser().getUsername() )
+      };
+      getUserInfo();
+      fetchData();
+
+      const getRanking = () => {
+        communityLeaderBoard.map((user, index) => {
+          if (user.userName == username) {
+            setcurrentranking(index + 1)
+          }
+        })
+      }
+      getRanking();
+    
+      }, [userID]);
 
 
   const Leadboards = [
@@ -68,27 +106,20 @@ function LeaderboardView() {
     },
   ]
 
-  // function sortingList() {
-  //   setSortedLeaderBoards(Leadboards.sort((person_a, person_b) => (person_a.applications * (person_a.rejections / 10)
-  //     < (person_b.applications * (person_b.rejections / 10)) ? 1 : -1)))
-  //   console.log(Leadboards)
-  // }
-
-  // useEffect(() => {
-  //   sortingList()
-  // }, [])
 
   return (
     <div className='h-screen bg-beige md:flex text-black'>
 
 
       {/* Top King of Applications and Rejections */}
-      <div className=' flex flex-col md:pt-9 md:w-1/3 bg-slate-300 border-2'>
+      <div className=' flex flex-col rounded-lg md:pt-9 md:w-1/3 bg-slate-300 border-2'>
         
         <div className='flex flex-col gap-3 items-center justify-center'>
-        <p className='text-4xl font-saira text-navy'>{Leadboards[0].name}</p>
+        <p className='text-4xl font-saira text-navy'>{username}</p>
+          <div className='p-4'>
+          <img className="mx-auto my-auto rounded-lg" src={photoUrl} alt={Leadboards[0].name}></img>
 
-          <img className="mx-auto my-auto" src={Leadboards[0].pic} alt={Leadboards[0].name}></img>
+          </div>
 
 
           {/* Deets */}
@@ -96,18 +127,18 @@ function LeaderboardView() {
             {/* Applications */}
             <p className='text-md flex'>
               <object className="mx-auto my-auto" type="image/svg+xml" data={application}></object>
-              <p className='m-auto'>{Leadboards[0].applications}</p>
+              <p className='m-auto'>{submittedAppCount}</p>
             </p>
 
 
             {/* Rejection */}
             <p className='text-m flex'>
               <object className="mx-auto my-auto" type="image/svg+xml" data={rejection}></object>
-              <p className='m-auto'>{Leadboards[0].rejections}</p>
+              <p className='m-auto'>{rejectedAppCount}</p>
             </p>
           </div>
                       {/* Ranking */}
-                      <p className='text-md font-saira text-navy text-xl'>Rank: 2</p>
+                      <p className='text-md font-saira text-navy text-xl'>Rank: {currentranking}</p>
         </div>
       </div>
       {/* Rankings Column */}
