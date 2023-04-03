@@ -10,12 +10,19 @@ import Pool from "./UserPool";
 
 
 function ApplicationForm() {
+  const getDoubleDigitNumber = (val) => {
+    if (val < 10) {
+      return "0" + val;
+    }
+    return val;
+  }
+
     const navigate = useNavigate();
     const userID = Pool.getCurrentUser().getUsername();
 
   //Date Variable
-  const [day, setDay] = useState(new Date().getDate());
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [day, setDay] = useState(getDoubleDigitNumber(new Date().getDate()));
+  const [month, setMonth] = useState(getDoubleDigitNumber(new Date().getMonth() + 1));
   const [year, setYear] = useState(new Date().getFullYear());
 
   const [companyName, setCompanyName] = useState("");
@@ -33,7 +40,7 @@ function ApplicationForm() {
   //function to set the days
   const days = [];
   for (let i = 1; i <= 31; i++) {
-    days.push(<option key={i} value={i}>{i}</option>);
+    days.push(<option key={getDoubleDigitNumber(i)} value={getDoubleDigitNumber(i)}>{getDoubleDigitNumber(i)}</option>);
   }
 
   //function to set the months
@@ -69,13 +76,40 @@ function ApplicationForm() {
 
   // const history = useHistory();
 
+  const validateForm = () => {
+    if (companyName === "") {
+      return false;
+    }
+    if (position === "") {
+      return false;
+    }
+    if (day === "") {
+      return false;
+    }
+    if (month === "") {
+      return false;
+    }
+    if (year === "") {
+      return false;
+    }
+    if (applicationStatus === "") {
+      return false;
+    }
+    return true;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      alert("Please fill out all fields");
+      return;
+    } 
 
     const date = new Date(`${year}-${month}-${day}`);
     const formattedDate = date.toISOString().substring(0,10);
     setDateApplied(formattedDate);
-    const communityID = uuidv4();
+    const communityID = "0Km4CwF0nULxl1qtpyuB" //uuidv4();
 
     const applicationData = {
       companyName: companyName,
@@ -97,6 +131,10 @@ function ApplicationForm() {
     navigate('/home');
   }
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    navigate('/home');
+  }
   return (
     
 <form onSubmit={handleSubmit} className="h-screen m-2 p-2 ">
@@ -121,7 +159,7 @@ function ApplicationForm() {
       <select id="day" value={day} onChange={(e) => setDay(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
         {days}
       </select>
-      <select id="month" value={month < 10 ? "0" + month : month} onChange={(e) => setMonth(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
+      <select id="month" value={month} onChange={(e) => setMonth(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
         {months}
       </select>
       <select id="year" value={year} onChange={(e) => setYear(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
@@ -147,7 +185,7 @@ function ApplicationForm() {
 
 
       <div className="button-row">
-        <button type="button">Cancel</button>
+        <button type="button" onClick={handleCancel} >Cancel</button>
         <button type="submit">Submit</button>
       </div>
     </form>
