@@ -45,8 +45,8 @@ function App() {
   return (
     <div className="App h-screen bg-beige">
       <Account>
-          <Header text={text}/>
-          <Status/>
+          {/* <Header text={text}/> */}
+          <Status text={text}/>
 
           <Routes>
             <Route path='/' element={<LoginView/>}></Route>

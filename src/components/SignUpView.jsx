@@ -31,13 +31,13 @@ function SignUpView(props){
             console.log(data);
         })
         
-        navigate("/home")
+        navigate("/login")
 
       }
 
     return(
       <div className="h-screen flex justify-center flex-col bg-dark-navy p-4">
-      <div className="flex w-1/3 m-auto flex-col border-2 border-white">
+      <div className="flex md:w-1/3 m-auto flex-col border-2 border-white">
         <div className="font-saira mb-10 mt-10 text-white text-8xl text-center">Burn Out</div>
         <form className="flex flex-col m-4 p-3 bg-dark-navy" onSubmit={handleSubmit}>
             <label>Username</label>

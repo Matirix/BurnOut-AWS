@@ -39,7 +39,7 @@ function LoginView(props) {
   return (
     <div className="h-screen justify-center flex flex-col bg-dark-navy">
       <div className="flex flex-col bg-dark-navy m-5">
-      <div className="flex w-1/3 m-auto flex-col border-2 border-white">
+      <div className="flex md:w-1/3 m-auto flex-col border-2 border-white">
       <div className="font-saira mb-10 mt-10 text-white text-8xl text-center">Burn Out</div>
 {/*       
       <GoogleButton
