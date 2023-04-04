@@ -14,9 +14,12 @@ function ProfileView() {
   const [isEmailEditable, setIsEmailEditable] = useState(false);
   const [isCommunityIDEditable, setIsCommunityIDEditable] = useState(false);
 
+  /**
+   * For when the user needs to edit their profile
+   * @param {*} e 
+   */
   const handleUserUpdate = (e) => {
     e.preventDefault();
-
     const userData = {
       email: email,
       userName: username,
@@ -31,6 +34,10 @@ function ProfileView() {
     getUserInfo();
   };
 
+  /**
+   * Grabs the user info from the database and sets the state variables
+   * @returns 
+   */
   const getUserInfo = async () => {
     const data = await DataInterface.getUser();
     if (!data) {
@@ -39,8 +46,6 @@ function ProfileView() {
     console.log(data)
     setUsername(data.userName)
     setEmail(data.email)
-    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user123456" );
-    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/" + Pool.getCurrentUser().username);
     setCommunityID(data.communityID)
     DataInterface.getUserImage().then((url) => {
       console.log(url);
@@ -50,23 +55,23 @@ function ProfileView() {
     });
   }
 
-const handleUpload = () => {
-  const file = document.querySelector('input[type="file"]').files[0];
-  DataInterface.uploadUserImage(file).then((snap) => {
-    DataInterface.getUserImage().then((url) => {
-      console.log(url);
-      setPhotoUrl(url);
-    }) 
-  })
-  .catch((error) => {
-    console.error('Error uploading file:', error);
-  });
-};
-  
+  const handleUpload = () => {
+    const file = document.querySelector('input[type="file"]').files[0];
+    DataInterface.uploadUserImage(file).then((snap) => {
+      DataInterface.getUserImage().then((url) => {
+        console.log(url);
+        setPhotoUrl(url);
+      }) 
+    })
+    .catch((error) => {
+      console.error('Error uploading file:', error);
+    });
+  };
+  /**
+   * Gets the user info from the database and sets the state variables
+   */
   useEffect(() => {
     getUserInfo()
-    // setPhotoUrl("https://burnout-test.s3.us-west-2.amazonaws.com/user1234");
-
   }, []);
 
   return (

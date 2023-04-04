@@ -18,15 +18,17 @@ function CommunityView() {
 
   const userID = DataInterface.getUserID();
 
+  /**
+   * Fetches the community data from the database using UseEffect react snipper
+   */
   useEffect(() => {
+    // Fetches the daya
     const fetchData = async () => {
+      // calls teh data interface to get the data
       const data = await DataInterface.getCommunityApplications();
-      console.log(data)
       setCommunityData(data);
-      // console.log(Pool.getCurrentUser().getUsername() )
     };
     fetchData();
-    console.log(communityData)
   }, [userID]);
   
   return (

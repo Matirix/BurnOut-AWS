@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 
 
 function Header(props) {
-
+/**
+ * This is the header component that is used on every page
+ */
   const addApplication = [
     {
       name: 'plus',
@@ -12,6 +14,7 @@ function Header(props) {
       link: '/applicationForm'
     }
   ]
+  // This is for the desktop view of the navbar
   const navBarLinks = [
     {
         id: 1,
@@ -48,7 +51,7 @@ function Header(props) {
     }
   ]
   return (
-    <div className='top-0 h-13 p-4 w-full relative bg-dark-navy flex justify-between'>
+    <div className='top-0 h-13 p-4 w-full relative bg-dark-navy flex justify-center md:justify-between'>
         <h1 className='text-white text-3xl font-saira text-center my-auto'>{props.text}</h1>
 
         <div className='hidden md:flex gap-10'>

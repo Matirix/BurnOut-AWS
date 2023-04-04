@@ -11,6 +11,10 @@ function SignUpView(props){
 
     const navigate = useNavigate();
 
+    /**
+     * Handles the submit button and authenticates the user
+     * @param {*} e 
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
