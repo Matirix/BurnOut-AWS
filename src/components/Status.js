@@ -45,7 +45,7 @@ export const Status = (props) => {
           <section>
             {/* Checks if status is logged in, if it isn't then don't display the header */}
             <Header text={props.text}/>
-              <div className='flex justify-end'>
+              <div className='flex justify-end bg-slate-200'>
                 <button className='bg-dark-navy p-4 rounded-b-lg text-white font-salsa' onClick={handleLogout}>{user.username},  LOGOUT </button> 
               </div>
               <nav className="navbar block md:hidden">
