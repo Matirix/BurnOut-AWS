@@ -55,6 +55,7 @@ function ProfileView() {
     });
   }
 
+  
   const handleUpload = () => {
     const file = document.querySelector('input[type="file"]').files[0];
     DataInterface.uploadUserImage(file).then((snap) => {
@@ -77,10 +78,10 @@ function ProfileView() {
   return (
     <div className="profile p-4 bg-slate-200 h-screen m-auto flex flex-col md:flex-row">
       {/*  column with image */}
-      <section className='flex w-1/2 flex-col my-auto justify-center'>
+      <section className='flex md:w-1/2 flex-col my-auto justify-center'>
         <h2 className="font-bold text-4xl font-saira  text-dark-navy text-center">Change Photo</h2>
         {photoUrl && <img className='m-3 mx-auto w-2/3' src={photoUrl} alt="Profile" /> }
-        <div>
+        <div className='flex justify-center'>
         <UploadToS3 />
 
         </div>

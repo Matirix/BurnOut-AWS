@@ -1,56 +1,8 @@
-
-// import React , {useState} from 'react';
-// import { uploadFile } from 'react-s3';
-// import Pool from './UserPool'
-
-
-
-// const S3_BUCKET ='burnout-test';
-// const REGION ='us-west-2';
-// const ACCESS_KEY ='AKIAU7XKFOJGQUDQ4I74';
-// const SECRET_ACCESS_KEY ='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';
-// const DIR_NAME = Pool.getCurrentUser().username;
-
-// const config = {
-//     bucketName: S3_BUCKET,
-//     region: REGION,
-//     accessKeyId: ACCESS_KEY,
-//     secretAccessKey: SECRET_ACCESS_KEY,
-//     dirName: DIR_NAME
-// }
-
-// const UploadImageToS3WithReactS3 = () => {
-
-//     const [selectedFile, setSelectedFile] = useState(null);
-
-//     const handleFileInput = (e) => {
-//         setSelectedFile(e.target.files[0]);
-//     }
-
-//     const handleUpload = async (file) => {
-//         uploadFile(file, config)
-//             .then(data => console.log(data))
-//             .catch(err => console.error(err))
-//     }
-
-//     return <div>
-//         <div>React S3 File Upload</div>
-//         <input type="file" onChange={handleFileInput}/>
-//         <button onClick={() => handleUpload(selectedFile)}> Upload to S3</button>
-//     </div>
-// }
-
-// export default UploadImageToS3WithReactS3;
-
-
 import React , {useState} from 'react';
 import aws from 'aws-sdk';
 import Pool from './UserPool'
 import {getUserID} from './DataInterface'
 
-// import dotenv from 'dotenv';
-
-// dotenv.config();
 
 const S3_BUCKET ='burnout-test';
 const REGION ='us-west-2';
@@ -68,29 +20,25 @@ const config = {
 }
 
 
-
 const s3 = new aws.S3(config)
 
 
-// export async function generateUploadURL () {
-//     const imageName = "random image name"
-//     const params = ({
-//     Bucket: S3_BUCKET,
-//     Key: imageName,
-//     Expires: 60
-//     })
-//     const uploadURL = await s3.getSignedUrlPromise('putobject' , params)
-//     return uploadURL
-// }
 
 const UploadImageToS3WithReactS3 = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
-
+    /**
+     * Handles file input
+     * @param {*} e 
+     */
     const handleFileInput = (e) => {
         setSelectedFile(e.target.files[0]);
     }
 
+    /**
+     * Uploads to url
+     * @param {*} url 
+     */
     const uploadToURL = async (url) => {
         const response = await fetch(url, {
             method: 'PUT',
@@ -103,6 +51,11 @@ const UploadImageToS3WithReactS3 = () => {
     }
         
 
+    /**
+     * Handles the upload
+     * @param {*} file 
+     * @returns 
+     */
     const handleUpload = async (file) => {
         if (!file) return
         generateUploadURL()
@@ -112,6 +65,10 @@ const UploadImageToS3WithReactS3 = () => {
             .catch((err) => {console.log(err)})
     }
 
+    /**
+     * Loads the image url
+     * @returns 
+     */
     const generateUploadURL = async () => {
         const imageName = DIR_NAME
         const params = ({
@@ -126,9 +83,9 @@ const UploadImageToS3WithReactS3 = () => {
         return uploadURL
     }
 
-    return <div className=''>
+    return <div className='flex justify-center flex-col'>
         {/* <div>React S3 File Upload</div> */}
-        <input className="ml-32" type="file" onChange={handleFileInput}/>
+        <input className="md:ml-32" type="file" onChange={handleFileInput}/>
         <button className="text-white text-ig rounded-lg bg-navy font-bold rounded-20 py-2 px-4 cursor-pointer" type="button" onClick={() => handleUpload(selectedFile)}> Upload to S3</button>
     </div>
 }
