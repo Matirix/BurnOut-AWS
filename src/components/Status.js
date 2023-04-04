@@ -48,11 +48,11 @@ export const Status = (props) => {
               <div className='flex justify-end'>
                 <button className='bg-dark-navy p-4 rounded-b-lg text-white font-salsa' onClick={handleLogout}>{user.username},  LOGOUT </button> 
               </div>
-          </section>
-        : '' }</div>
-        <nav className="navbar block md:hidden">
+              <nav className="navbar block md:hidden">
           <Navbar/>
         </nav>  
+          </section>
+        : '' }</div>
 
     </div>
   )
