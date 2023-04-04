@@ -1,15 +1,16 @@
 import React from 'react'
 import * as DataInterface from './DataInterface'
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { JobPositions } from './DataInterface';
 import { useNavigate } from "react-router-dom";
 import Pool from "./UserPool";
 
-// import { userNavigate } from "react-router-dom";
-// import { useHistory } from 'react-router-dom';
-
-
 function ApplicationForm() {
+  /**
+   * Application form for users to submit their job applications
+   * @param {*} val 
+   * @returns 
+   */
   const getDoubleDigitNumber = (val) => {
     if (val < 10) {
       return "0" + val;
@@ -17,14 +18,14 @@ function ApplicationForm() {
     return val;
   }
 
-    const navigate = useNavigate();
-    const userID = Pool.getCurrentUser().getUsername();
+  const navigate = useNavigate();
+  const userID = Pool.getCurrentUser().getUsername();
 
-  //Date Variable
+  //Date Variables
   const [day, setDay] = useState(getDoubleDigitNumber(new Date().getDate()));
   const [month, setMonth] = useState(getDoubleDigitNumber(new Date().getMonth() + 1));
   const [year, setYear] = useState(new Date().getFullYear());
-
+  // Data Variables
   const [companyName, setCompanyName] = useState("");
   const [position, setPosition] = useState("");
   const [dateApplied, setDateApplied] = useState("");
@@ -35,7 +36,7 @@ function ApplicationForm() {
 
   const jobPosition = JobPositions;
 
-  // let navigate = useNavigate();
+
 
   //function to set the days
   const days = [];
@@ -65,6 +66,7 @@ function ApplicationForm() {
     years.push(<option key={i} value={i}>{i}</option>);
   }
 
+  // an array of objects for the status dropdown
   const statusOptions = [
     { value: 'applied', label: 'Applied' },
     { value: 'interview-invitation', label: 'Interview Invitation' },
@@ -74,8 +76,7 @@ function ApplicationForm() {
     { value: 'rejected', label: 'Rejected' },
   ];
 
-  // const history = useHistory();
-
+  // Logic for looking at the positions and setting the status options
   const validateForm = () => {
     if (companyName === "") {
       return false;
@@ -97,17 +98,21 @@ function ApplicationForm() {
     }
     return true;
   }
-
+  /**
+   * Handles the submission of the form
+   * @param {*} e 
+   * @returns 
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
       alert("Please fill out all fields");
       return;
-    } 
+    }
 
     const date = new Date(`${year}-${month}-${day}`);
-    const formattedDate = date.toISOString().substring(0,10);
+    const formattedDate = date.toISOString().substring(0, 10);
     setDateApplied(formattedDate);
     const communityID = "0Km4CwF0nULxl1qtpyuB" //uuidv4();
 
@@ -123,65 +128,69 @@ function ApplicationForm() {
     }
     console.log(DataInterface.getUser())
 
-    
+    // Creates the application using the data provided
     await DataInterface.createApplication(applicationData).then((response) => {
       console.log(response);
     });
     await DataInterface.incrementSubmittedAppCount();
     navigate('/home');
   }
-
+/**
+ * Handles the cancel button logic
+ * @param {*} e 
+ */
   const handleCancel = (e) => {
+    
     e.preventDefault();
     navigate('/home');
   }
   return (
-    
-<form onSubmit={handleSubmit} className="h-screen m-2 p-2 ">
-  <div className="form-row">
-    <div className="form-label">Company Name</div>
-    <input type="text" id="companyName" placeholder="Enter company name" value={companyName} onChange={(e) => setCompanyName(e.target.value)}  style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px" }} />
-  </div>
 
-  <div className="form-row">
-    <div className="form-label">Position</div>
-    <select id="position" value={position} onChange={(e) => setPosition(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px" }}>
-      <option value="" >Select Position:</option>
-      {Object.values(jobPosition).map((option) =>(
-        <option key={option} value={option}>{option}</option>
-      ))}
-    </select>
-  </div>
-  
-  <div className="date-row">
-    <div className="form-label">Date Applied</div>
-    <div className="date-selectors">
-      <select id="day" value={day} onChange={(e) => setDay(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
-        {days}
-      </select>
-      <select id="month" value={month} onChange={(e) => setMonth(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
-        {months}
-      </select>
-      <select id="year" value={year} onChange={(e) => setYear(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
-        {years}
-      </select>
-    </div>
-  </div>
+    <form onSubmit={handleSubmit} className="h-screen m-2 p-2 ">
+      <div className="form-row">
+        <div className="form-label">Company Name</div>
+        <input type="text" id="companyName" placeholder="Enter company name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px" }} />
+      </div>
 
-  <div className="form-row">
-    <div className="form-label">Application Status</div>
-    <select id="applicationStatus" value={applicationStatus} onChange={(e) => setApplicationStatus(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px" }}>
-      <option value="">Choose Application Status</option>
-      {statusOptions.map((option) =>(
-        <option key={option.value} value={option.value}>{option.label}</option>
-      ))}
-    </select>
-  </div>
+      <div className="form-row">
+        <div className="form-label">Position</div>
+        <select id="position" value={position} onChange={(e) => setPosition(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px" }}>
+          <option value="" >Select Position:</option>
+          {Object.values(jobPosition).map((option) => (
+            <option key={option} value={option}>{option}</option>
+          ))}
+        </select>
+      </div>
 
-  <div className="form-row">
-    <div className="form-label">Comments</div>
-    <input type="text" id="comments" placeholder="Enter comments" value={comments} onChange={(e) => setComments(e.target.value)} style={{ height: "100px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "10px", padding: "10px" }} />
-  </div>
+      <div className="date-row">
+        <div className="form-label">Date Applied</div>
+        <div className="date-selectors">
+          <select id="day" value={day} onChange={(e) => setDay(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
+            {days}
+          </select>
+          <select id="month" value={month} onChange={(e) => setMonth(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
+            {months}
+          </select>
+          <select id="year" value={year} onChange={(e) => setYear(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px", marginRight: "5px" }}>
+            {years}
+          </select>
+        </div>
+      </div>
+
+      <div className="form-row">
+        <div className="form-label">Application Status</div>
+        <select id="applicationStatus" value={applicationStatus} onChange={(e) => setApplicationStatus(e.target.value)} style={{ height: "50px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "9999px", padding: "0 20px" }}>
+          <option value="">Choose Application Status</option>
+          {statusOptions.map((option) => (
+            <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="form-row">
+        <div className="form-label">Comments</div>
+        <input type="text" id="comments" placeholder="Enter comments" value={comments} onChange={(e) => setComments(e.target.value)} style={{ height: "100px", backgroundColor: "#F5F8FA", border: "none", borderRadius: "10px", padding: "10px" }} />
+      </div>
 
 
       <div className="button-row">
@@ -190,7 +199,7 @@ function ApplicationForm() {
       </div>
     </form>
   );
-  
+
 }
 
 export default ApplicationForm

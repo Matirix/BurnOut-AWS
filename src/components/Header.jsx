@@ -51,14 +51,12 @@ function Header(props) {
     <div className='top-0 h-13 p-4 w-full relative bg-dark-navy flex justify-between'>
         <h1 className='text-white text-3xl font-saira text-center my-auto'>{props.text}</h1>
 
-        <div className='flex gap-10'>
+        <div className='hidden md:flex gap-10'>
         {navBarLinks.map(({ id, link, pic, name }) => (
                 <Link className=' flex-col' key={id} to={link}>
-                    {/* <div className="flex-col w-1/3"> */}
                         <div className="text-center active:bg-violet-100 rounded-full color-white">
                         <img src={pic} alt={name} className="mx-auto my-auto"/>
                         </div>
-                    {/* </div> */}
                 </Link>
             ))}
         </div>

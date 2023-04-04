@@ -70,7 +70,7 @@ const handleUpload = () => {
   }, []);
 
   return (
-    <div className="profile p-4 bg-slate-200 h-screen m-auto flex">
+    <div className="profile p-4 bg-slate-200 h-screen m-auto flex flex-col md:flex-row">
       {/*  column with image */}
       <section className='flex w-1/2 flex-col my-auto justify-center'>
         <h2 className="font-bold text-4xl font-saira  text-dark-navy text-center">Change Photo</h2>
@@ -86,7 +86,7 @@ const handleUpload = () => {
 
       {/*  column with details */}
       <section className='flex w-1/2 flex-col my-auto'>
-        {/* <h2 className="font-bold text-4xl font-saira text-dark-navy text-center">Your Details</h2> */}
+
        {/* Details */}
 
       <h2 className="font-bold text-dark-navy ml-4">Username</h2>

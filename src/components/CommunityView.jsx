@@ -28,53 +28,9 @@ function CommunityView() {
     fetchData();
     console.log(communityData)
   }, [userID]);
-
-
-  const communityActivity = [
-    {
-      id: 1,
-      name: 'Matthew',
-      pic: '../images/person.svg',
-      comment: '50th application anniversary! yaayy... end me.',
-      applications: '50',
-      rejections: '4',
-      datetime: '2 hours ago'
-
-    },
-    {
-      id: 2,
-      name: 'Wendy',
-      pic: '../images/person.svg',
-      comment: 'Life is suffering..',
-      applications: '200',
-      rejections: '3',
-      datetime: '2 hours ago'
-
-
-    },
-    // {
-    //   id: 3,
-    //   name: 'Gareth',
-    //   pic: '../images/person.svg',
-    //   comment: 'Mastercard is the best company ever!',
-    //   applications: '100',
-    //   rejections: '0',
-    //   datetime: '2 hours ago'
-    // },
-    {
-      id: 4,
-      name: 'Deji',
-      pic: '../images/person.svg',
-      comment: 'Yeah, I got the job at LuluLemon!',
-      applications: '500',
-      rejections: '15',
-      datetime: '2 hours ago'
-
-    },
-  ]
-
+  
   return (
-    <div className='h-screen'>
+    <div className=' max-h-screen'>
       <div className='flex h-full flex-col gap-5 my-5' >
         {/* Counter */}
         <div className="counter flex font-saira text-xl gap-3 justify-center border-b-1 border-black">
@@ -88,7 +44,7 @@ function CommunityView() {
             // <Link className=' flex-col w-1/3' key={id} to={link}>
 
             // Each card
-            <div className="mx-7 px-4 py-2 flex bg-slate-200 text-slate-500 rounded-lg shadow " key={id}>
+            <div className="mx-7 md:m-auto md:w-1/3 px-4 py-2 flex bg-slate-200 text-slate-500 rounded-lg shadow " key={id}>
               {/* Image */}
               <div className="text-center rounded-full max-w-md my-auto color-white">
                 <object type="image/svg+xml" data={"../images/person.svg"} alt={userID}></object>

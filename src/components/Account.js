@@ -8,6 +8,9 @@ const AccountContext = createContext()
 
 
 export const Account = (props) => {
+    /**
+     * This is the context provider for the account. It provides the following functions:
+     */
     const navigate = useNavigate();
     const getSession = async () => {
         return await new Promise((resolve, reject) => {
@@ -28,6 +31,9 @@ export const Account = (props) => {
 
     // To authenticate
     const authenticate = async (Username, Password) => {
+        /**
+         * This function authenticates the user and returns a promise.
+         */
         return await new Promise((resolve, reject) => {
 
             const user = new CognitoUser({
@@ -58,6 +64,9 @@ export const Account = (props) => {
     }
 
     const logout = async () => {
+        /**
+         * This function logs out the user and returns a promise.
+         */
         return await new Promise((resolve, reject) => {
             const user = Pool.getCurrentUser()
             if (user) {
@@ -68,37 +77,7 @@ export const Account = (props) => {
             }
         })
     }
-
-    // const logout = () => {
-    //     console.log("attempting log out")
-    //     const user = Pool.getCurrentUser()
-    //     console.log(user)
-    //     user.getSession(function(error, session) {
-    //         if(error) {
-    //          console.log(error);
-    //         //  browserHistory.push("/");
-    //          return;
-    //         }
-    //         if(session) {
-    //         //  _this.getUserAttributes(cognitoUser);
-    //         console.log(session)
-    //         user.signOut({function(error, result) {
-    //             if (error) {
-    //                 console.log(error);
-    //                 return;
-    //             }
-    //             console.log('user signed out');
-    //             navigate('/')
-    //         }})
-    //         }
-    //     });
-    //     // if (user) {
-    //     //     console.log("Logging out")
-    //     //     user.signOut()
-    //     // }
-    // }
-
-
+    
     return (
         <AccountContext.Provider value={{authenticate, getSession, logout}}>
             {props.children}

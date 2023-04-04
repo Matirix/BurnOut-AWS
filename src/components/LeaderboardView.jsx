@@ -153,11 +153,9 @@ function LeaderboardView() {
         {/* Each card */}
         {communityLeaderBoard.map(({ id, link, pic, userName, rejectedAppCount, submittedAppCount, datetime, comment }, index) => {
           return (
-            <div className=" p-2 rounded-lg flex justify-between border-solid border-black border-1 bg-slate-200 mx-2" key={id}>
-
-
+            <div className=" p-5 rounded-lg flex justify-between border-solid border-black border-1 bg-slate-200 mx-2" key={id}>
               <div className='flex gap-2 w-1/5'>
-                <p className='text-navy m-auto font-saira text-4xl'>{index + 1}</p>
+                <p className='text-navy m-auto font-saira md:text-4xl'>{index + 1}</p>
                 <img src={"../images/person.svg"} alt="" className='grow' />
               </div>
 
@@ -169,12 +167,18 @@ function LeaderboardView() {
                   <div className="flex">
                     <object className="mx-auto my-auto" type="image/svg+xml" data={application}></object>
 
-                    <p className='m-auto font-saira'>Applications: {submittedAppCount}</p>
+                    <p className='m-auto font-saira'>
+                      <span className='hidden md:block'>Applications:
+                        </span> {submittedAppCount}</p>
 
                   </div>
                   <div className='flex'>
                     <object className="mx-auto my-auto" type="image/svg+xml" data={rejection}></object>
-                    <p className='m-auto font-saira'>Rejections: {rejectedAppCount}</p>
+                    <p className='m-auto font-saira'>
+                      <span className='hidden md:block'>
+                      Rejections: 
+                      </span>
+                      {rejectedAppCount}</p>
 
 
                   </div>

@@ -29,7 +29,6 @@ function LoginView(props) {
 
   useEffect(() => {
     if (user) {
-      // return navigate("/");
       console.log(data)
     }
   }, [user]);
@@ -41,21 +40,6 @@ function LoginView(props) {
       <div className="flex flex-col bg-dark-navy m-5">
       <div className="flex md:w-1/3 m-auto flex-col border-2 border-white">
       <div className="font-saira mb-10 mt-10 text-white text-8xl text-center">Burn Out</div>
-{/*       
-      <GoogleButton
-      className='mx-auto my-4'
-          onClick={() => {
-            DataInterface.authenticateWithGoogle().then((user) => {
-              console.log("logged in")
-              console.log(user);
-              setUser(user);
-              // props.onLogin();
-            });
-          }}
-        /> */}
-
-
-
         <br></br>
         <h1>---------------------OR--------------------</h1>
         <form className="flex flex-col bg-dark-navy m-4 p-4" onSubmit={handleSubmit}>
